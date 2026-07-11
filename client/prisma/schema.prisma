@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model CapexItem {
+  id                Int       @id @default(autoincrement())
+
+  // ---- Input fields (entered by the user) ----
+  clientName        String
+  category          String
+  subCategory       String
+  typeOfExpense     String
+  billing           String?
+  warehouseCode     String?
+  billingMethod     String    // "Standard" or "Reducing"
+  glName            String?   // "SLM" or "WDV"
+  assetLife         Int       // in months
+  startDate         DateTime
+  endDate           DateTime?
+  intOnCapexAnnual  Decimal   @db.Decimal(10, 4)  // e.g. 0.24 = 24%
+  uom               String?
+  unitCost          Decimal   @db.Decimal(14, 2)
+  qty               Decimal   @db.Decimal(14, 4)
+  contingentPct     Decimal?  @db.Decimal(10, 4)
+  managementFeePct  Decimal?  @db.Decimal(10, 4)
+  billingMonth      DateTime  // the "current month" reference for calculations
+
+  // ---- Computed fields (calculated by the backend) ----
+  intOnCapexMonthly Decimal   @db.Decimal(14, 6)
+  investmentValue   Decimal   @db.Decimal(16, 2)
+  usedLife          Decimal   @db.Decimal(14, 4)
+  amortPerMonth     Decimal   @db.Decimal(16, 4)
+  capexBillingStd   Decimal   @db.Decimal(16, 4)
+  capexBillingRed   Decimal   @db.Decimal(16, 4)
+  maintenance       Decimal   @db.Decimal(16, 4)
+  aggregateCost     Decimal   @db.Decimal(16, 4)
+  contingencyCost   Decimal   @db.Decimal(16, 4)
+  managementFeeInr  Decimal   @db.Decimal(16, 4)
+  totalBill         Decimal   @db.Decimal(16, 4)
+
+  // ---- Housekeeping ----
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("capex_items")
+}
