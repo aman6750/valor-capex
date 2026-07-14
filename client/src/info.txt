@@ -1,0 +1,6 @@
+ old localhost URL - postgresql://postgres:Shriman@localhost:5432/valor_capex?schema=public
+
+
+
+
+ neon string - postgresql://neondb_owner:npg_pQ5LGlTP4VSB@ep-wild-salad-ailfqmpy.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require
