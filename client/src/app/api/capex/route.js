@@ -26,7 +26,7 @@ export async function POST(request) {
         billingMethod:    body.billingMethod,
         glName:           body.glName || null,
         assetLife:        Number(body.assetLife),
-        startDate:        new Date(body.startDate),
+        startDate:        body.startDate ? new Date(body.startDate) : null,
         endDate:          body.endDate ? new Date(body.endDate) : null,
         intOnCapexAnnual: body.intOnCapexAnnual,
         uom:              body.uom || null,
@@ -34,7 +34,7 @@ export async function POST(request) {
         qty:              body.qty,
         contingentPct:    body.contingentPct || null,
         managementFeePct: body.managementFeePct || null,
-        billingMonth:     new Date(body.billingMonth),
+        billingMonth:     body.billingMonth ? new Date(body.billingMonth) : null,
 
         // --- computed fields (from calculateCapex) ---
         intOnCapexMonthly: computed.intOnCapexMonthly,
